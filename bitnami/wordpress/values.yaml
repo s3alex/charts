@@ -484,6 +484,55 @@ startupProbe:
     ## httpHeaders:
     ## - name: X-Forwarded-Proto
     ##   value: https
+  ## @param networkPolicy.ingressRules.customRules [object] Custom network policy ingress rule
+  ##
+  ingressRules:
+    ## mariadb backend only can be accessed from testlink
+    ##
+    backendOnlyAccessibleByFrontend: false
+    ## Additional custom backend selector
+    ## e.g:
+    ## customBackendSelector:
+    ##   - to:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    customBackendSelector: {}
+    ## Allow only from the indicated:
+    accessOnlyFrom:
+      enabled: false
+      ## e.g:
+      ## podSelector:
+      ##   label: access
+      ##
+      podSelector: {}
+      ## e.g:
+      ## namespaceSelector:
+      ##   label: access
+      ##
+      namespaceSelector: {}
+    ## custom ingress rules
+    ## e.g:
+    ## customRules:
+    ##   - from:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    customRules: {}
+  ## @param networkPolicy.egressRules.denyConnectionsToExternal Enable egress rule that denies outgoing traffic outside the cluster, except for DNS (port 53).
+  ## @param networkPolicy.egressRules.customRules [object] Custom network policy rule
+  ##
+  egressRules:
+    # Deny connections to external. This is not compatible with an external database.
+    denyConnectionsToExternal: false
+    ## Additional custom egress rules
+    ## e.g:
+    ## customRules:
+    ##   - to:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+values.yaml [dos] (18:44 24/04/2022)                                                                                                                                                  1016,1 90%
+-- INSERT --
     ##
     httpHeaders: []
   initialDelaySeconds: 30
@@ -778,7 +827,7 @@ pdb:
 ##
 autoscaling:
   enabled: false
-  minReplicas: 1
+  minReplicas: 4
   maxReplicas: 11
   targetCPU: 50
   targetMemory: 50
