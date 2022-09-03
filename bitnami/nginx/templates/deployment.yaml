@@ -136,7 +136,7 @@ spec:
       containers:
       {{- end }}
         - name: nginx
-          image: bellsinclair/website
+          image: {{ include "nginx.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- if .Values.containerSecurityContext.enabled }}
           securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
