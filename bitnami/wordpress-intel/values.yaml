@@ -437,10 +437,10 @@ service:
   type: LoadBalancer
   ## @param service.port WordPress service HTTP port
   ##
-  port: 80
+  port: 89
   ## @param service.httpsPort WordPress service HTTPS port
   ##
-  httpsPort: 443
+  httpsPort: 441
   ## @param service.httpsTargetPort Target port for HTTPS
   ##
   httpsTargetPort: https
